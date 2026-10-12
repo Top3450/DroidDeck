@@ -22,7 +22,7 @@ object AppLanguage {
     const val SYSTEM = ""
 
     /** The languages the app ships, as BCP 47 tags, in the order the picker lists them. */
-    val supported: List<String> = listOf("en", "es", "fr", "ru", "ja", "ko", "zh-CN", "zh-TW", "zh-HK")
+    val supported: List<String> = listOf("en", "es", "fr", "ru", "ja", "ko", "th", "zh-CN", "zh-TW", "zh-HK")
 
     private const val PREFS = "language"
     private const val KEY = "app_language"
@@ -99,7 +99,7 @@ object AppLanguage {
 
     /** Which of the app's languages [locale] reads as, or null when the app does not ship it. */
     fun supportedTag(locale: Locale): String? = when (locale.language) {
-        "en", "es", "fr", "ru", "ja", "ko" -> locale.language
+        "en", "es", "fr", "ru", "ja", "ko", "th" -> locale.language
         "zh" -> when {
             locale.script == "Hans" -> "zh-CN"
             locale.country == "HK" || locale.country == "MO" -> "zh-HK"
@@ -121,6 +121,7 @@ object AppLanguage {
         "ru" -> "Русский"
         "ja" -> "日本語"
         "ko" -> "한국어"
+        "th" -> "ไทย"
         "zh-CN" -> "简体中文"
         "zh-TW" -> "繁體中文（台灣）"
         "zh-HK" -> "繁體中文（香港）"

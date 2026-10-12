@@ -13,6 +13,7 @@ class SteamLanguageTest {
         assertEquals("spanish", steam("es"))
         assertEquals("japanese", steam("ja"))
         assertEquals("koreana", steam("ko"))
+        assertEquals("thai", steam("th"))
         assertEquals("schinese", steam("zh-CN"))
         assertEquals("tchinese", steam("zh-TW"))
         assertEquals("tchinese", steam("zh-HK"))
