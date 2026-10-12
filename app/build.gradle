@@ -86,7 +86,8 @@ android {
     ndkVersion project.findProperty('ndkVersion') ?: '27.3.13750724'
 
     defaultConfig {
-        applicationId "com.droiddeck.launcher"
+        // Personal build: its own package, so it installs beside the official DroidDeck.
+        applicationId "com.droiddeck.launcher.th"
         minSdkVersion 26
         // 28 is not a leftover. An app on targetSdk 29+ runs in a domain that may not execute a
         // file out of its own data directory, and this app's entire job is to exec a rootfs:
@@ -98,6 +99,8 @@ android {
         buildConfigField "String", "SOURCE_COMMIT", "\"${sourceCommit}\""
         buildConfigField "int", "PR_NUMBER", "${prNumber}"
         buildConfigField "boolean", "CI_BUILD", "${ciBuild}"
+        // A personal build never asks the official update channel: those APKs are a different app.
+        buildConfigField "boolean", "PERSONAL_BUILD", "true"
         buildConfigField "String", "RELEASE_SIGNER", "\"${releaseSigner}\""
         buildConfigField "long", "COMMIT_TIME", "${commitTime}L * 1000L"
         buildConfigField "String", "VARIANT_SUFFIXES", "\"${variantSuffixes}\""

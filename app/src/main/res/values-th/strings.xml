@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DroidDeck</string>
+    <string name="app_name">DroidDeck TH</string>
     <string-array name="loading_hints">
             <item>การเปิดครั้งแรกจะดาวน์โหลด Steam อาจใช้เวลาสักครู่</item>
             <item>โดยค่าเริ่มต้น เมื่อออกจากแอป Steam จะถูกพักไว้ และทำต่อจากเดิมเมื่อกลับมา</item>

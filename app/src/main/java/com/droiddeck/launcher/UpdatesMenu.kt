@@ -62,6 +62,7 @@ internal class UpdatesMenu(private val activity: Activity, private val ui: Handl
     }
 
     fun check(force: Boolean) {
+        if (BuildConfig.PERSONAL_BUILD) return
         if (checking || stage != null) return
         val now = System.currentTimeMillis()
         if (!force && now - lastCheck < 60_000) return

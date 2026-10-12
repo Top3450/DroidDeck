@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import android.os.LocaleList
+import com.droiddeck.launcher.BuildConfig
 import java.util.Locale
 
 /**
@@ -32,7 +33,7 @@ object AppLanguage {
 
     /** The stored choice: one of [supported], or [SYSTEM]. */
     fun chosen(context: Context): String =
-        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY, SYSTEM)
+        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY, if (BuildConfig.PERSONAL_BUILD) "th" else SYSTEM)
             ?.takeIf { it in supported } ?: SYSTEM
 
     fun setChosen(context: Context, tag: String) {

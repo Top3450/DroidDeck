@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger
  */
 object BwrapSpawner {
     private const val TAG = "BwrapSpawner"
-    const val SOCKET = "com.droiddeck.launcher.bwrap"
+    const val SOCKET = "com.droiddeck.launcher.th.bwrap"
     private val seq = AtomicInteger()
     @Volatile private var server: LocalServerSocket? = null
 
