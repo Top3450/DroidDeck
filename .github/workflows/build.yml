@@ -758,11 +758,11 @@ jobs:
     uses: ./.github/workflows/update-catalog.yml
     secrets: inherit
 
-  # Personal build (DroidDeck TH): each push to a th-* branch becomes a prerelease of this fork,
+  # Personal build (DroidDeck TH): each push or manual run on a th-* branch becomes a prerelease of this fork,
   # "<branch>-build", replaced on the next push, so the APK can be downloaded from a phone.
   th-publish:
     needs: build
-    if: github.event_name == 'push' && startsWith(github.ref_name, 'th-')
+    if: github.event_name != 'pull_request' && startsWith(github.ref_name, 'th-')
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
