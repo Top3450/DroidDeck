@@ -3,7 +3,8 @@ run-name: ${{ github.event_name == 'pull_request' && format('building pr {0} on 
 
 on:
   push:
-    branches: [ main ]
+    # th-*: the personal DroidDeck TH branches, built and published as a release (th-publish below).
+    branches: [ main, 'th-*' ]
     paths-ignore:
       - '**/*.md'
       - 'LICENSE'
@@ -756,3 +757,30 @@ jobs:
     if: ${{ always() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && needs.announce.result != 'skipped' }}
     uses: ./.github/workflows/update-catalog.yml
     secrets: inherit
+
+  # Personal build (DroidDeck TH): each push to a th-* branch becomes a prerelease of this fork,
+  # "<branch>-build", replaced on the next push, so the APK can be downloaded from a phone.
+  th-publish:
+    needs: build
+    if: github.event_name == 'push' && startsWith(github.ref_name, 'th-')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: droiddeck-apk
+          path: apk
+      - name: Publish the APK as a prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME}-build"
+          name="DroidDeck-TH-${GITHUB_REF_NAME}.apk"
+          cp apk/*.apk "$name"
+          gh release delete "$tag" -R "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
+          gh release create "$tag" "$name" -R "$GITHUB_REPOSITORY" --prerelease --target "$GITHUB_SHA" \
+            --title "DroidDeck TH (${GITHUB_REF_NAME})" \
+            --notes "Personal build of ${GITHUB_REF_NAME} at ${GITHUB_SHA::7}. Install over the previous DroidDeck TH."
