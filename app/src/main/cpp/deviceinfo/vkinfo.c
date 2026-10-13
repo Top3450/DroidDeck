@@ -14,6 +14,9 @@ static const char *const EXTENSIONS[] = {
     "VK_EXT_robustness2", "VK_EXT_transform_feedback", "VK_EXT_custom_border_color",
     "VK_KHR_dynamic_rendering", "VK_EXT_extended_dynamic_state3", "VK_EXT_descriptor_indexing",
     "VK_KHR_timeline_semaphore", "VK_EXT_mesh_shader", "VK_KHR_ray_query",
+    /* What the compositor needs to take a session's buffers without a CPU copy (Mali diagnosis). */
+    "VK_EXT_external_memory_dma_buf", "VK_EXT_image_drm_format_modifier",
+    "VK_ANDROID_external_memory_android_hardware_buffer",
 };
 
 static const char *type_name(VkPhysicalDeviceType type) {

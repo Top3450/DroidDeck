@@ -104,6 +104,12 @@ object DeviceReport {
         k("KGSL gpu_model", readSys("/sys/class/kgsl/kgsl-3d0/gpu_model"))
         k("KGSL chip id", readSys("/sys/class/kgsl/kgsl-3d0/gpu_chipid"))
         k("System Vulkan ICD", if (File("/vendor/lib64/hw/vulkan.adreno.so").exists()) "/vendor/lib64/hw/vulkan.adreno.so" else "not at the usual path")
+        // Personal build: on a Mali phone, what its own driver (the compositor's) and kbase offer.
+        if (com.droiddeck.launcher.gpu.MaliDriver.isMali()) {
+            k("Mali kbase node", if (File("/dev/mali0").exists()) "/dev/mali0" else "not visible")
+            k("dma_heap system", File("/dev/dma_heap/system").exists())
+            runCatching { com.droiddeck.launcher.gpu.VulkanInfo.query() }.getOrNull()?.forEach { (key, value) -> k("  system vk $key", value) }
+        }
 
         h("Display")
         k("Session output", SessionState.outputSize?.let { "${it.first}x${it.second}" })

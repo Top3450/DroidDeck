@@ -63,7 +63,13 @@ public final class LinuxVulkanDriver {
      * An id whose import is gone resolves to null rather than failing the launch.
      */
     public static String resolveIcdPath(Context context, String value) {
-        if (value == null || value.isEmpty()) return null;
+        if (value == null || value.isEmpty()) {
+            // Personal build: the runtime's Turnip cannot drive a Mali GPU; hand out the bundled
+            // PanVK kbase driver there instead (null on every other GPU, as before).
+            String mali = MaliDriver.icdPath(context);
+            if (mali != null) Log.i(TAG, "Mali GPU: session draws with the bundled PanVK kbase driver (" + mali + ")");
+            return mali;
+        }
         LinuxVulkanDriverManager m = new LinuxVulkanDriverManager(context);
         String icd = m.getIcdPath(value);
         if (icd == null) {

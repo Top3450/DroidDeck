@@ -1,0 +1,11 @@
+libvulkan_panvk_kbase.so - Mesa PanVK (Vulkan for Arm Mali) talking to Android's mali_kbase.
+
+Source:   https://github.com/zenithblue-oss/panvk-kbase-android
+Release:  g615-v11-csf-v0.1.0-beta.11, asset libvulkan_panfrost-glibc-aarch64.so
+          sha256 f2768cf57e4cb18071b9f68fd5b3abc0093c6a616a431f2e4ff86e43efc4b147 (as published)
+          shipped here with symbols stripped (llvm-strip --strip-unneeded)
+Built on: Mesa 26.3.0-devel 5a07217f, profile g615-v11-csf (Mali-G615, Valhall v11, CSF)
+
+Mesa is distributed under the MIT license and the other licenses listed in the Mesa source tree
+(docs/license.rst). The release's patch and build scaffolding is MIT. Experimental: validated by its
+authors on one Mali-G615 MC6 device only.

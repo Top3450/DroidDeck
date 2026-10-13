@@ -133,6 +133,19 @@ if [ -n "${BL_VK_DRIVER:-}" ]; then
     # Loaders older than 1.3.207 only know the old name; both are harmless together.
     export VK_ICD_FILENAMES="$BL_VK_DRIVER"
     echo "== vulkan driver: imported $bl_icd_lib (via $BL_VK_DRIVER)"
+    # Personal build: the bundled PanVK kbase driver for Mali GPUs (gpu/MaliDriver.kt). PanVK
+    # refuses an architecture it calls not well tested unless told otherwise, and the app's
+    # compositor runs on the phone's own Mali driver, which cannot import this driver's dma-bufs:
+    # present in shared memory instead (a CPU copy per frame, which the compositor already takes
+    # for wl_shm clients). Each switch can be overridden from the launch environment.
+    case $BL_VK_DRIVER in
+      */panvk*)
+        export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=${PAN_I_WANT_A_BROKEN_VULKAN_DRIVER:-1}
+        export MESA_VK_IGNORE_CONFORMANCE_WARNING=${MESA_VK_IGNORE_CONFORMANCE_WARNING:-1}
+        export MESA_VK_WSI_DEBUG=${MESA_VK_WSI_DEBUG:-sw}
+        echo "== vulkan driver: PanVK kbase (Mali) - WSI ${MESA_VK_WSI_DEBUG}, /dev/mali0 $([ -e /dev/mali0 ] && echo present || echo MISSING), dma_heap $([ -e /dev/dma_heap/system ] && echo present || echo missing)"
+        ;;
+    esac
   else
     echo "== vulkan driver: IGNORING $BL_VK_DRIVER (manifest or ${bl_icd_lib:-library} unreadable); using the runtime's own"
   fi
