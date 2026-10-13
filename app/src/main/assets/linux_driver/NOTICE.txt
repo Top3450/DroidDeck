@@ -3,7 +3,10 @@ libvulkan_panvk_kbase.so - Mesa PanVK (Vulkan for Arm Mali) talking to Android's
 Source:   https://github.com/zenithblue-oss/panvk-kbase-android
 Release:  g615-v11-csf-v0.1.0-beta.11, asset libvulkan_panfrost-glibc-aarch64.so
           sha256 f2768cf57e4cb18071b9f68fd5b3abc0093c6a616a431f2e4ff86e43efc4b147 (as published)
-          shipped here with symbols stripped (llvm-strip --strip-unneeded)
+          shipped here with symbols stripped (llvm-strip --strip-unneeded) and one change:
+          the extension name VK_EXT_physical_device_drm renamed to VK_EXT_physical_device_drX, so
+          the driver no longer advertises a DRM device it does not have on Android (gamescope's
+          nested Wayland backend refuses a device that reports DRM without a primary node)
 Built on: Mesa 26.3.0-devel 5a07217f, profile g615-v11-csf (Mali-G615, Valhall v11, CSF)
 
 Mesa is distributed under the MIT license and the other licenses listed in the Mesa source tree

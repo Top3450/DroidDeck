@@ -24,7 +24,8 @@ object MaliDriver {
 
     /** The store id; the session script keys PanVK's switches on "panvk" in the path. */
     const val ID = "panvk-kbase-g615"
-    const val VERSION = "g615-v11-csf-v0.1.0-beta.11"
+    /** Bumped whenever the bundled file changes, so the installed copy is replaced. */
+    const val VERSION = "g615-v11-csf-v0.1.0-beta.11+nodrm"
     private const val ASSET = "linux_driver/libvulkan_panvk_kbase.so"
     private const val STAMP = "bundled-version"
 
